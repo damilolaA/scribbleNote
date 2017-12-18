@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - /data/db:/data/db
+    ports:
+      - "27017:27017"
+
+  nodeapp:
+    build: 
+      context: .
+      dockerfile: node.Dockerfile
+    image: nodeapp
+    ports:
+      - "2000:2000"
+      - "3000:3000"
+    volumes:
+      - /c/Users/ScribbleNote:/opt/app
