@@ -5,8 +5,8 @@ var express    = require("express"),
 router.param("id", controller.interceptIds);
 
 router.route("/")
-	.get(controller.addUser)
-	.post(controller.fetchUsers)
+	.get(controller.fetchUsers)
+	.post(controller.addUser)
 
 router.route("/:id")
 	.get(controller.getUser)

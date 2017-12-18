@@ -13,6 +13,7 @@ exports.interceptIds = function(req, res, next, id) {
 exports.addUser = function(req, res, next) {
 	var user = req.body;
 
+	console.log(user);
 	var newUser = new userModel(user);
 	newUser.save(function(err, data) {
 		if(err) {
