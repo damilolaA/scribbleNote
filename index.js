@@ -1,8 +1,5 @@
-var http = require("http");
+var app = require("./server/server.js");
 
-var app = http.createServer(function(req, res) {
-	console.log("Hello World");
-})
 
 app.listen(2000, function(err) {
 	if(err) {return err;}

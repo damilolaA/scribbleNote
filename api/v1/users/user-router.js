@@ -1,6 +1,6 @@
 var express    = require("express"),
 	router     = express.Router(),
-	controller = require("user-controller.js");
+	controller = require("./user-controller.js");
 
 router.param("id", controller.interceptIds);
 
