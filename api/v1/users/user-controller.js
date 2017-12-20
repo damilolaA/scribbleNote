@@ -30,7 +30,7 @@ exports.getUser = function(req, res, next) {
 		return next(new Error("could not get user"))
 	}
 
-	res.status(200).json(data)
+	res.status(200).json(req.user);
 }
 
 exports.fetchUsers = function(req, res, next) {

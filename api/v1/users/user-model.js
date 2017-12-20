@@ -5,9 +5,9 @@
  mongoose.connect("mongodb://mongo:27017/note");
 
 userSchema = new mongoose.Schema({
-	username: {type: String, required: true},
+	username: {type: String, required: true, unique:true},
 	password: {type: String, required: true},
-	data	: {type: Date, default: Date.now}
+	date	: {type: Date, default: Date.now}
 })
 
 userSchema.pre("save", function(next) {
