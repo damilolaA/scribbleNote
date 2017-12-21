@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ScribbleNote</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style/styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+</head>
+<body>
+
+	<div id="top">
+		<div class="top-background"></div>
+		<div class="topbar">
+			<div class="brand-white"></div>
+			<h3 class="brand-name white">ScribbleNote</h3>
+			<div class="avatar-def user-image"></div>
+		</div>
+	</div>
+	<div id="main-views">
+		<div class="view notes module-active">
+			<h3 class="header">My Notes</h3>
+			<ul class="note-list">
+				<li class="note card">
+					<div class="delete-icon delete-note"></div>
+					<h4 class="note-title">How to make amala</h4>
+					<h5 class="date-created">created on Jan 18, 2017</h5>
+					<p class="note-brief">first, you start boiling water for the amala. Make...</p>
+				</li>
+				<li class="note card">
+					<div class="delete-icon delete-note"></div>
+					<h4 class="note-title">How to make amala</h4>
+					<h5 class="date-created">created on Jan 18, 2017</h5>
+					<p class="note-brief">first, you start boiling water for the amala. Make...</p>
+				</li>
+				<li class="note card">
+					<div class="delete-icon delete-note"></div>
+					<h4 class="note-title">How to make amala</h4>
+					<h5 class="date-created">created on Jan 18, 2017</h5>
+					<p class="note-brief">first, you start boiling water for the amala. Make...</p>
+				</li>
+			</ul>
+			<button class="def-fab add-note"></button>
+		</div>
+		<div class="view notepad">
+			<div class="header">
+				<h4 class="back">Back</h4>
+			</div>
+			<form class="main module-active">
+				<input type="text" name="title" class="text-field title" placeholder="Note Title">
+				<textarea class="main-note text-field" placeholder="Type your note here"></textarea>
+			</form>
+		</div>
+	</div>
+	<div id="home-views" class="module-active">
+		<div class="view login-signup">
+			<div class="carousel">
+				<div class="bg bg1 bg-active"></div>
+				<div class="bg bg2"></div>
+				<div class="bg bg3"></div>
+				<div class="bg bg4"></div>
+			</div>
+			<div class="brand-avatar"></div>
+			<h2 class="manifest">Welcome to ScribbleNote!</h2>
+			<div class="forms">
+				<form class="login">
+					<p class="error"></p>
+					<p class="success"></p>
+					<label for="login" class="header">Login</label>
+					<input type="text" name="username" placeholder="Username" class="text-field">
+					<input type="password" name="password" placeholder="Password" class="text-field">
+					<input type="submit" name="submit" value="login" class="def-button submit">
+					<p class="pointer">dont have an account? <a href="#">Signup</a></p>
+				</form>
+				<form class="signup module-active">
+					<p class="error"></p>
+					<p class="success"></p>
+					<label for="signup" class="header">Signup</label>
+					<input type="text" name="username" placeholder="Username" class="text-field">
+					<input type="password" name="password" placeholder="Password" class="text-field">
+					<input type="submit" name="submit" value="Signup" class="def-button submit">
+					<p class="pointer">already have an account? <a href="#">Login</a></p>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript" src="./js/app.js"></script>
+</body>
+</html>
