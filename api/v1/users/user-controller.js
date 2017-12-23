@@ -11,17 +11,28 @@ exports.interceptIds = function(req, res, next, id) {
 }
 
 exports.addUser = function(req, res, next) {
-	var user = req.body;
+	var user = req.body,
+		username = req.body.username;
 
-	console.log(user);
+
 	var newUser = new userModel(user);
-	newUser.save(function(err, data) {
+	userModel.findOne({username: username}, (err, data) => {
 		if(err) {
-			return next(new Error("could not add user"))
+			return next(new Error("...."))
 		}
 
-		res.status(200).json(data)
-	})
+		if(data != null) {
+			return next(new Error("username exists already"))
+		} else{
+			newUser.save(function(err, data) {
+				if(err) {
+					return next(new Error("could not add user"))
+				}
+
+				res.status(200).json(data)
+			})	
+		}
+	})	
 }
 
 exports.getUser = function(req, res, next) {

@@ -16,6 +16,9 @@ exports.verifyUser = function(req, res, next) {
 			return next(new Error("incorrect username and/or password"))
 		}
 
+		data = data.toObject();
+		data["msg"] = "Login successful";
+
 		res.status(200).json(data);
 	});
 }
