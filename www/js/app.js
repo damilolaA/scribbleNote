@@ -103,7 +103,6 @@
 				if(info.hasOwnProperty("msg")) {
 					homeView.classList.toggle("module-active");
 					notePad.classList.add("module-active");
-					console.log("i am logging");
 				}
 			}
 		}
