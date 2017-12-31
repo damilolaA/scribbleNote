@@ -16,5 +16,5 @@ services:
     ports:
       - "2000:2000"
       - "3000:3000"
-    volumes:
+    volumes: 
       - /c/Users/ScribbleNote:/opt/app

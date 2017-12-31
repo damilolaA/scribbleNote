@@ -1,6 +1,6 @@
  var mongoose = require("mongoose"),
- 	 bcrypt	  = require("bcrypt"),
- 	userSchema;
+ 	 bcrypt	  = require("bcrypt-nodejs"),
+ 	 userSchema;
 
  mongoose.connect("mongodb://mongo:27017/note");
 

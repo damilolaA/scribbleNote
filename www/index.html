@@ -16,8 +16,9 @@
 			<div class="avatar-def user-image"></div>
 		</div>
 	</div>
-	<div id="main-views">
-		<div class="view notes module-active">
+
+	<div id="main-views" class="module-active">
+		<div class="view notes">
 			<h3 class="header">My Notes</h3>
 			<ul class="note-list">
 				<li class="note card">
@@ -41,18 +42,20 @@
 			</ul>
 			<button class="def-fab add-note"></button>
 		</div>
-		<div class="view notepad module-active">
+
+		<div class="view notepad">
 			<div class="header">
 				<h4 class="back">Back</h4>
 			</div>
-			<form class="main module-active">
+			<form class="main">
 				<input type="text" name="title" class="text-field title" placeholder="Note Title">
 				<textarea class="main-note text-field" placeholder="Type your note here"></textarea>
-				<input type="submit" name="submit" value="Add" class="def-button submit">
+				<input type="submit" name="submit" value="Add Note" class="def-button submit">
 			</form>
 		</div>
 	</div>
-	<div id="home-views" class="">
+
+	<div id="home-views" class="module-active">
 		<div class="view login-signup">
 			<div class="carousel">
 				<div class="bg bg1 bg-active"></div>
@@ -73,7 +76,7 @@
 					<p class="pointer">dont have an account? <a href="#">Signup</a></p>
 				</form>
 				<form class="signup">
-					 <p class="error"></p> 
+					<p class="error"></p> 
 					<p class="success"></p>
 					<label for="signup" class="header">Signup</label>
 					<input type="text" name="username" placeholder="Username" class="text-field">

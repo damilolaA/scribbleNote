@@ -1,11 +1,31 @@
 
 (function() {
 
-	var signup   = document.getElementsByClassName("signup")[0],
-		login    = document.getElementsByClassName("login")[0],
-		error    = signup.getElementsByClassName("error")[0],
-		notePad  = document.getElementsByClassName("view notepad")[0],
-		xhr	     = new XMLHttpRequest();
+	var signup        = document.getElementsByClassName("signup")[0],
+		login         = document.getElementsByClassName("login")[0],
+		error         = signup.getElementsByClassName("error")[0],
+		homeView      = document.getElementById("home-views"),
+		mainView      = document.getElementById("main-views"),
+		notePad       = mainView.getElementsByClassName("view notepad")[0],
+		mainNote      = document.getElementsByClassName("main")[0],
+		loginPointer  = document.getElementsByClassName("pointer")[0],
+		signupPointer = document.getElementsByClassName("pointer")[1],
+		xhr	          = new XMLHttpRequest();
+
+	console.log(loginPointer);
+	console.log(signupPointer);
+
+	signupPointer.addEventListener("click", function(e) {
+		e.preventDefault();
+
+		login.classList.remove("module-active");
+	})
+
+	loginPointer.addEventListener("click", function(e) {
+		e.preventDefault();
+
+		signup.classList.toggle("module-active");
+	})
 
 	signup.addEventListener("submit", function(e) {
 		e.preventDefault();
@@ -55,7 +75,8 @@
 
 
 	login.addEventListener("submit", function(e) {
-		
+		e.preventDefault();
+
 		var data = {},
 			elements = this.elements;
 
@@ -72,8 +93,6 @@
 		}
 
 		xhr.send(JSON.stringify(data));
-
-		e.preventDefault();
 	})
 
 	function manageResponse(http) {
@@ -82,8 +101,9 @@
 				var info = JSON.parse(http.responseText);
 
 				if(info.hasOwnProperty("msg")) {
-					login.classList.toggle("module-active");
-					notePad.classList.toggle("module-active");
+					homeView.classList.toggle("module-active");
+					notePad.classList.add("module-active");
+					console.log("i am logging");
 				}
 			}
 		}
