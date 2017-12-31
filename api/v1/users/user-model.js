@@ -1,8 +1,10 @@
- var mongoose = require("mongoose"),
- 	 bcrypt	  = require("bcrypt-nodejs"),
+ var mongoose 	 = require("mongoose"),
+ 	 bcrypt	  	 = require("bcrypt-nodejs"),
+ 	 config   	 = require("../../../config/config.js"),
+ 	 databaseUrl = config.database,
  	 userSchema;
 
- mongoose.connect("mongodb://mongo:27017/note");
+ mongoose.connect(databaseUrl);
 
 userSchema = new mongoose.Schema({
 	username: {type: String, required: true, unique:true},

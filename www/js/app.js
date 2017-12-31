@@ -12,9 +12,6 @@
 		signupPointer = document.getElementsByClassName("pointer")[1],
 		xhr	          = new XMLHttpRequest();
 
-	console.log(loginPointer);
-	console.log(signupPointer);
-
 	signupPointer.addEventListener("click", function(e) {
 		e.preventDefault();
 
@@ -72,7 +69,6 @@
 			}
 		}
 	}
-
 
 	login.addEventListener("submit", function(e) {
 		e.preventDefault();
