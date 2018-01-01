@@ -4,7 +4,7 @@
   "description": "A note taking application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "author": "Damilola Adio",
   "license": "ISC",
