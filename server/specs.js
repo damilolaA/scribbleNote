@@ -4,9 +4,9 @@ var app     = require("./server.js"),
 
 describe("scribbleNote", function() {
 
-	it("should expect 200", function(done) {
+	it("should expect 200", function() {
 		request(app)
-			.get("api/v1/users")
-			.expect(200, done)
+			.get("/api/v1/users")
+			.expect(200)
 	})
 })
