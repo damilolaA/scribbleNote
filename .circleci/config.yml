@@ -4,5 +4,6 @@ jobs:
     docker:
       - image: oyinloslos/nodebase:latest
     steps:
+      - checkout
       - run: npm install
       - run: npm test
