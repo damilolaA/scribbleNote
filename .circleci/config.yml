@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: oyinloslos/nodebase:latest
+      - image: mongo
     steps:
       - checkout
       - run: npm install
