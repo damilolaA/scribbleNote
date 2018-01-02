@@ -3,6 +3,8 @@ jobs:
   build:
     docker:
       - image: oyinloslos/nodebase:latest
+        environment:
+          DATABASE_URL: mongodb://mongo:27017/note
       - image: mongo
     steps:
       - checkout
