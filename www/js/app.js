@@ -8,14 +8,17 @@
 		mainView      = document.getElementById("main-views"),
 		notePad       = mainView.getElementsByClassName("view notepad")[0],
 		mainNote      = document.getElementsByClassName("main")[0],
-		loginPointer  = document.getElementsByClassName("pointer")[0],
-		signupPointer = document.getElementsByClassName("pointer")[1],
+		signupPointer = document.getElementsByClassName("pointer")[0],
+		loginPointer  = document.getElementsByClassName("pointer")[1],
 		xhr	          = new XMLHttpRequest();
+
+	console.log(signupPointer);
+	console.log(loginPointer);
 
 	signupPointer.addEventListener("click", function(e) {
 		e.preventDefault();
 
-		login.classList.remove("module-active");
+		signup.classList.toggle("module-active");
 	})
 
 	loginPointer.addEventListener("click", function(e) {

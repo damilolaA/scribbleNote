@@ -1,8 +1,8 @@
- var mongoose 	 = require("mongoose"),
- 	 bcrypt	  	 = require("bcrypt-nodejs"),
- 	 config   	 = require("../../../config/config.js"),
- 	 databaseUrl = config.database,
- 	 userSchema;
+var mongoose 	 = require("mongoose"),
+ 	bcrypt	  	 = require("bcrypt-nodejs"),
+ 	config   	 = require("../../../config/config.js"),
+ 	databaseUrl  = config.database,
+ 	userSchema;
 
  mongoose.connect(databaseUrl);
 
