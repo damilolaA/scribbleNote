@@ -12,9 +12,6 @@
 		loginPointer  = document.getElementsByClassName("pointer")[1],
 		xhr	          = new XMLHttpRequest();
 
-	console.log(signupPointer);
-	console.log(loginPointer);
-
 	signupPointer.addEventListener("click", function(e) {
 		e.preventDefault();
 
@@ -43,7 +40,7 @@
 
 		data = data.substring(0, data.length -1);
 
-		xhr.open("POST", "https://scribblenoteapp.herokuapp.com/api/v1/users");
+		xhr.open("POST", "http://192.168.99.100:2000/api/v1/users");
 
 		xhr.setRequestHeader("Content-Type", "Application/x-www-form-urlencoded");
 
@@ -82,8 +79,9 @@
 		Array.prototype.forEach.call(elements, function(v,i,a) {
 			data[encodeURIComponent(v.name)] = encodeURIComponent(v.value); 
 		});
-
-		xhr.open("POST", "https://scribblenoteapp.herokuapp.com/api/v1/auth");
+		console.log(data);
+		
+		xhr.open("POST", "http://192.168.99.100:2000/api/v1/auth");
 
 		xhr.setRequestHeader("Content-Type", "Application/json");
 

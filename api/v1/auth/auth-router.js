@@ -5,5 +5,4 @@ var express = require("express"),
 router.route("/")
 	.post(auth.verifyUser)
 
-
 module.exports = router;
