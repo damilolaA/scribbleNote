@@ -19,15 +19,15 @@ userSchema.pre("save", function(next) {
 
 userSchema.methods = {
 
+	authenticate: function(plainText) {
+		return bcrypt.compareSync(plainText, this.password)
+	},
+	
 	encryptPassword: function(plainText) {
 		if(!plainText) { return "";}
 
 		var salt = bcrypt.genSaltSync();
 		return bcrypt.hashSync(plainText, salt);
-	},
-
-	authenticate: function(plainText) {
-		return bcrypt.compareSync(plainText, this.password)
 	}
 }
 

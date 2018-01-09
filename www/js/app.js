@@ -79,11 +79,12 @@
 		Array.prototype.forEach.call(elements, function(v,i,a) {
 			data[encodeURIComponent(v.name)] = encodeURIComponent(v.value); 
 		});
-		console.log(data);
+
+		console.log(data)
 		
 		xhr.open("POST", "http://192.168.99.100:2000/api/v1/auth");
 
-		xhr.setRequestHeader("Content-Type", "Application/json");
+		xhr.setRequestHeader("Content-Type", "application/json");
 
 		xhr.onreadystatechange = function() {
 			manageResponse(xhr);
