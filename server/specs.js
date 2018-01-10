@@ -9,7 +9,7 @@ var app     = require("./server.js"),
 
 describe("scribbleNote", function() {
 
-	xit("should test if the post route returns data", function(done) {
+	it("should test if the post route returns data", function(done) {
 		var data = {
 			email: "segun@gmail.com",
 			password: "segun"
@@ -35,7 +35,7 @@ describe("scribbleNote", function() {
 			.expect("Content-Type", "Application/json")
 			.expect(200)
 			.end(function(err, res) {
-				
+
 				expect(res.body).to.be.an("array")
 				expect(res.body[0]).to.be.an("object")
 				expect(res.body[0]).to.have.property("email")
