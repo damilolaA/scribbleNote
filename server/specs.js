@@ -9,7 +9,7 @@ var app     = require("./server.js"),
 
 describe("scribbleNote", function() {
 
-	xit("should test if the post route returns data", function(done) {
+	it("should test if the post route returns data", function(done) {
 		var data = {
 			email: "segun@gmail.com",
 			password: "segun"
