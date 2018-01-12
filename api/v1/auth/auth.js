@@ -1,4 +1,7 @@
-var userModel = require("../users/user-model.js");
+var userModel   = require("../users/user-model.js"),
+	expressjwt = require("express-jwt"),
+	jwt         = require("jsonwebtoken"),
+	config		= require("../../../config/config.js");
 
 /*function validateEmail(email) {
   var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -27,21 +30,15 @@ exports.verifyUser = function(req, res, next) {
 		data = data.toObject();
 		data["msg"] = "Login successful";
 
-		res.status(200).json(data);
+		req.user = data;
+		next()
 	});	
 }
 
-/*userModel.findOne({email: email}).then(function(person) {
-		if(!person) {return next(new Error("User not found"))};
-
-		//console.log(person);
-		if(!person.authenticate(password)) {
-			return next(new Error("invalid username and/or password"))
-		}
-
-		person = person.toObject();
-		person["msg"] = "Login successful";
-		res.status(200).json(person)
-	}, function(err) {
-		return next(err);
-	})*/
+exports.signToken = function(id) {
+	return jwt.sign(
+		{id: id},
+		config.secret,
+		{expiresIn: config.expiry}
+	);
+}

@@ -84,7 +84,7 @@
 		
 		xhr.open("POST", "http://192.168.99.100:2000/api/v1/auth");
 
-		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("Content-Type", "application/json")
 
 		xhr.onreadystatechange = function() {
 			manageResponse(xhr);
@@ -98,7 +98,9 @@
 			if(http.status == 200 || http.status == 304) {
 				var info = JSON.parse(http.responseText);
 
-				if(info.hasOwnProperty("msg")) {
+				if(info.hasOwnProperty("token")) {
+					localStorage.setItem("token", info.token);
+
 					homeView.classList.toggle("module-active");
 					notePad.classList.add("module-active");
 				}
