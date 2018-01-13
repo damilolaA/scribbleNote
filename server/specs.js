@@ -11,10 +11,10 @@ describe("scribbleNote", function() {
 
 	describe("#user registration", function() {
 
-		xit("should test if the post route returns data", function(done) {
+		it("should test if the post route returns data", function(done) {
 			var data = {
-				email: "segun@gmail.com",
-				password: "segun"
+				email: "bayo@gmail.com",
+				password: "bayo"
 			};
 
 			request(app)
@@ -74,7 +74,7 @@ describe("scribbleNote", function() {
 							request(app)
 								.get("api/v1/users/"+_id)
 								.end(function(err, resp) {
-									console.log(resp);
+
 									expect(resp).to.be.equal(null)
 									done();
 								})
@@ -85,8 +85,8 @@ describe("scribbleNote", function() {
 		it("should update users", function(done) {
 
 			var data = {
-				email: "prince@gmail.com",
-				password: "prince"
+				email: "queen@gmail.com",
+				password: "queen"
 			}
 
 			request(app)
@@ -98,7 +98,7 @@ describe("scribbleNote", function() {
 
 					var id = res.body._id,
 						details = {
-							email: "augustine@gmail.com"
+							email: "bright@gmail.com"
 						},
 						expectedVal = 1;
 
@@ -108,7 +108,7 @@ describe("scribbleNote", function() {
 						.set("Content-Type", "Application/json")
 						.expect(200)
 						.end(function(err, response) {
-							console.log(response.body)
+							
 							expect(response.body).to.be.an("object")
 							expect(response.body.n).to.be.equal(expectedVal)
 							expect(response.body.nModified).to.equal(expectedVal)

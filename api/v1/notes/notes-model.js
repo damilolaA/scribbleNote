@@ -1,5 +1,5 @@
 var mongoose    = require("mongoose"),
-	config      = require("../../../config/config.js"),
+	config      = require("../../../config/config.js")[process.env.NODE_ENV || 'development'],
 	databaseUrl = config.database,
 	noteSchema;
 
