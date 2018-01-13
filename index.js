@@ -1,5 +1,5 @@
 var app     = require("./server/server.js"),
-	config  = require("./config/config.js")[process.env.NODE_ENV || 'development'],
+	config  = require("./config/config.js"),
 	port    = config.port,
 	express = require("express");
 

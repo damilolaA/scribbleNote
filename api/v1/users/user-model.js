@@ -1,6 +1,6 @@
 var mongoose 	 = require("mongoose"),
  	bcrypt	  	 = require("bcrypt-nodejs"),
- 	config   	 = require("../../../config/config.js")[process.env.NODE_ENV || 'development'],
+ 	config   	 = require("../../../config/config.js"),
  	databaseUrl  = config.database,
  	userSchema;
 

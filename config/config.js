@@ -1,18 +1,18 @@
+var _ = require("lodash");
+
 var config = {
 
-	development: {
-		port: 2000,
-		database: "mongodb://localhost/note",
-		secret: "mickey",
-		expiry: 604800
-	},
-	
-	production: {
-		port: process.env.PORT || 2000,
-		database: process.env.MONGOLAB_URI,
-		secret: "mickey",
-		expiry: 604800
-	}
+	dev: 'development',
+	test: 'testing',
+	prod: 'production'
 }
 
-module.exports = config;
+process.env.NODE_ENV = process.env.NODE_ENV || config.dev;
+
+config.env = process.env.NODE_ENV
+
+var envconfig = require('./' + config.env);
+
+var data = _.merge(config, envconfig);
+
+module.exports = data;
