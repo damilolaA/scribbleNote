@@ -69,13 +69,11 @@ exports.deleteUser = function(req, res, next) {
 
 exports.updateUser = function(req, res, next) {
 
-	var id = req.params.id
-
-	userModel.update({_id: req.user._id}, req.body, (err, res) => {
+	userModel.update({_id: req.user._id}, req.body, {new: true}, (err, data) => {
 		if(err) {
 			return next(new Error("cannot update user info"))
 		}
-	})
 
-	res.status(200).json(req.user);
+		res.status(200).json(data);
+	})
 }
