@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: oyinloslos/nodebase:latest
         environment:
-          DATABASE_URL: mongodb://localhost/note
+          DATABASE_URL: mongodb://mongo:27017/note
       - image: mongo
     steps:
       - checkout
