@@ -39,7 +39,7 @@
 		})
 
 		data = data.substring(0, data.length -1);
-		// https://scribblenoteapp.herokuapp.com/
+		//"https://scribblenoteapp.herokuapp.com/api/v1/users
 		xhr.open("POST", "https://scribblenoteapp.herokuapp.com/api/v1/users");
 
 		xhr.setRequestHeader("Content-Type", "Application/x-www-form-urlencoded");
@@ -62,7 +62,7 @@
 				} 
 			} else {
 				if(http.status == 500) {
-					var msg = document.createTextNode("username exists already");
+					var msg = document.createTextNode("email exists already");
 					error.appendChild(msg);
 					error.classList.toggle("module-active");
 				}
