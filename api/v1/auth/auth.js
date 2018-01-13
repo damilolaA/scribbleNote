@@ -23,6 +23,8 @@ exports.verifyUser = function(req, res, next) {
 	userModel.findOne({email: email}, function(err, data) {
 		if(err) { return next(new Error("cannot login user")) }
 
+		if(data == null) return next(new Error("incorrect email and/or password"))
+
 		if(!data.authenticate(password)) {
 			return next(new Error("incorrect email and/or password"))
 		} 

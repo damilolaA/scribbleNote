@@ -21,7 +21,6 @@ exports.addUser = function(req, res, next) {
 			return next(new Error("...."))
 		}
 
-		console.log(data);
 		if(data != null) {
 			return next(new Error("email exists already"))
 
