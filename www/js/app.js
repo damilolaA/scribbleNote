@@ -39,8 +39,8 @@
 		})
 
 		data = data.substring(0, data.length -1);
-
-		xhr.open("POST", "http://192.168.99.100:2000/api/v1/users");
+		// https://scribblenoteapp.herokuapp.com/
+		xhr.open("POST", "https://scribblenoteapp.herokuapp.com/api/v1/users");
 
 		xhr.setRequestHeader("Content-Type", "Application/x-www-form-urlencoded");
 
@@ -82,7 +82,7 @@
 
 		console.log(data)
 		
-		xhr.open("POST", "http://192.168.99.100:2000/api/v1/auth");
+		xhr.open("POST", "https://scribblenoteapp.herokuapp.com/api/v1/auth");
 
 		xhr.setRequestHeader("Content-Type", "application/json")
 
