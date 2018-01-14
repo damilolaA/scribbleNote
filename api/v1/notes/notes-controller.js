@@ -47,3 +47,27 @@ exports.getNote = function(req, res, next) {
 
 	res.status(200).json(req.note);
 }
+
+exports.updateNote = function(req, res, next) {
+
+	noteModel.update({id: req.note._id}, req.body, function(err, data) {
+
+		if(err) {
+			return next(new Error("cannot update note"))
+		}
+
+		res.status(200).json(req.note)
+	})
+}
+
+exports.deleteNote = function(req, res, next) {
+
+	noteModel.remove({id: req.note._id}, (err, data) => {
+
+		if(err) {
+			return next(new Error("note cannot be deleted"))
+		}
+	})
+
+	res.status(200).json(req.note)
+}

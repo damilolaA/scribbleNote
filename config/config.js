@@ -11,6 +11,8 @@ process.env.NODE_ENV = process.env.NODE_ENV || config.dev;
 
 config.env = process.env.NODE_ENV
 
+console.log(config.env)
+
 var envconfig = require('./' + config.env);
 
 var data = _.merge(config, envconfig);

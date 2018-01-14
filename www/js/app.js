@@ -4,6 +4,7 @@
 	var signup        = document.getElementsByClassName("signup")[0],
 		login         = document.getElementsByClassName("login")[0],
 		error         = signup.getElementsByClassName("error")[0],
+		loginErr      = login.getElementsByClassName("error")[0],
 		homeView      = document.getElementById("home-views"),
 		mainView      = document.getElementById("main-views"),
 		notePad       = mainView.getElementsByClassName("view notepad")[0],
@@ -40,7 +41,7 @@
 
 		data = data.substring(0, data.length -1);
 		//"https://scribblenoteapp.herokuapp.com/api/v1/users
-		xhr.open("POST", "https://scribblenoteapp.herokuapp.com/api/v1/users");
+		xhr.open("POST", "http://192.168.99.100:2000/api/v1/users");
 
 		xhr.setRequestHeader("Content-Type", "Application/x-www-form-urlencoded");
 
@@ -82,7 +83,7 @@
 
 		console.log(data)
 		
-		xhr.open("POST", "https://scribblenoteapp.herokuapp.com/api/v1/auth");
+		xhr.open("POST", "http://192.168.99.100:2000/api/v1/auth");
 
 		xhr.setRequestHeader("Content-Type", "application/json")
 
@@ -104,6 +105,13 @@
 					homeView.classList.toggle("module-active");
 					notePad.classList.add("module-active");
 				}
+			}
+		} else {
+			if(http.status == 500) {
+				var err = document.createTextNode("invalid username and/or password");
+
+				loginErr.appendChild(err);
+				loginErr.classList.add("module-active");
 			}
 		}
 	}
