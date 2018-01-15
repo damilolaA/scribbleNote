@@ -116,5 +116,46 @@
 		}
 	}
 
+	mainNote.addEventListener("submit", function(e) {
+		e.preventDefault();
+
+		var data = "",
+			elements = this.elements;
+
+		Array.prototype.forEach.call(elements, function(v, i, a) {
+
+			data += encodeURIComponent(v.name);
+			data += "=";
+			data += encodeURIComponent(v.value);
+			data += "&";
+		})
+
+		data = data.substring(0, data.length - 1);
+
+		console.log(data);
+
+		xhr.open("POST", "http://192.168.99.100:2000/api/v1/notes")
+
+		xhr.setRequestHeader("Content-Type", "Application/x-www-form-urlencoded")
+		xhr.setRequestHeader("Authorization", "Bearer" + localStorage.getItem("token"));
+
+		xhr.onreadystatechange = function(xhr) {
+			addNote(xhr)
+		}
+
+		xhr.send(data);
+	})
+
+	function addNote(http) {
+
+		if(http.readyState == 4) {
+			if(http.status == 200 || http.status == 304) {
+
+				var data = JSON.parse(http.responseText);
+				console.log(data);
+				alert("Hello");
+			}
+		}
+	}
 
 }())
