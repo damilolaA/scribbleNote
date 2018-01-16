@@ -20,6 +20,8 @@ exports.addNote = (req, res, next) => {
 
 	var data = req.body
 
+	console.log(data);
+	
 	var note = new noteModel(data)
 	note.save(function(err, msg) {
 		if(err) {

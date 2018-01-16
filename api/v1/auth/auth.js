@@ -1,12 +1,16 @@
 var userModel   = require("../users/user-model.js"),
-	expressjwt = require("express-jwt"),
+	expressjwt  = require("express-jwt"),
 	jwt         = require("jsonwebtoken"),
-	config		= require("../../../config/config.js");
+	config		= require("../../../config/config.js")
+	checkToken  = expressjwt({secret: config.secret});
 
 /*function validateEmail(email) {
   var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
 }*/
+exports.decodeToken = function(req, res, next) {
+	checkToken(req, res, next)
+}
 
 exports.verifyUser = function(req, res, next) {
 
