@@ -80,8 +80,6 @@
 		Array.prototype.forEach.call(elements, function(v,i,a) {
 			data[encodeURIComponent(v.name)] = encodeURIComponent(v.value); 
 		});
-
-		console.log(data)
 		
 		xhr.open("POST", "http://192.168.99.100:2000/api/v1/auth");
 
@@ -98,9 +96,10 @@
 		if(http.readyState == 4) {
 			if(http.status == 200 || http.status == 304) {
 				var info = JSON.parse(http.responseText);
-
+				console.log(info)
 				if(info.hasOwnProperty("token")) {
 					localStorage.setItem("token", info.token);
+					localStorage.setItem("email", info.email);
 
 					homeView.classList.toggle("module-active");
 					notePad.classList.add("module-active");

@@ -6,7 +6,7 @@ var express    = require("express"),
 router.param("id", controller.interceptId);
 
 router.route("/")
-	.post(controller.addNote)
+	.post(auth.decodeToken, controller.addNote)
 	.get(auth.decodeToken, controller.fetchNotes)
 
 router.route("/:id")
