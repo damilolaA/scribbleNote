@@ -136,9 +136,9 @@
 		xhr.open("POST", "http://192.168.99.100:2000/api/v1/notes")
 
 		xhr.setRequestHeader("Content-Type", "Application/x-www-form-urlencoded")
-		xhr.setRequestHeader("Authorization", "Bearer" + localStorage.getItem("token"));
+		xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"));
 
-		xhr.onreadystatechange = function(xhr) {
+		xhr.onreadystatechange = function() {
 			addNote(xhr)
 		}
 

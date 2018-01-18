@@ -7,3 +7,8 @@ exports.signIn = (req, res, next) => {
 	
 	res.status(200).json(req.user)
 }
+
+exports.loggedInUser = (req, res, next) => {
+	
+	auth.decodeToken()
+}

@@ -1,4 +1,5 @@
-var noteModel = require("./notes-model.js");
+var noteModel = require("./notes-model.js"),
+	userModel = require("../users/user-model.js");
 
 
 exports.interceptId = function(req, res, next, id) {
@@ -18,15 +19,22 @@ exports.interceptId = function(req, res, next, id) {
 
 exports.addNote = (req, res, next) => {
 
-	var data = req.body
+	var id = req.user.id
 
-	var note = new noteModel(data)
-	note.save(function(err, msg) {
-		if(err) {
-			return next(new Error("cannot add note"))
-		}
+	userModel.findById(id, (err, info) => {
 
-		res.status(200).json(msg)
+		console.log(info.email)
+		var data = req.body;
+		data.email = info.email;
+
+		var note = new noteModel(data)
+		note.save(function(err, msg) {
+			if(err) {
+				return next(new Error("cannot add note"))
+			}
+
+			res.status(200).json(msg)
+		})
 	})
 }
 
