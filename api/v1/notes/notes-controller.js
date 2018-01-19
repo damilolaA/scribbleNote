@@ -23,7 +23,8 @@ exports.addNote = (req, res, next) => {
 
 	userModel.findById(id, (err, info) => {
 
-		console.log(info.email)
+		if(err) {return next(new Error("could not fetch user by id"))}
+
 		var data = req.body;
 		data.email = info.email;
 
@@ -40,12 +41,25 @@ exports.addNote = (req, res, next) => {
 
 exports.fetchNotes = function(req, res, next) {
 
-	noteModel.find(function(err, data) {
+	var id = req.user.id,
+		email;
+
+	userModel.findById(id, (err, user) => {
+
+		email = user.email;
+
 		if(err) {
-			return next(new Error("cannot fetch all notes"))
+			return next(new Error("cannot get user"))
 		}
 
-		res.status(200).json(data);
+		noteModel.findOne({email: email}, function(error, data) {
+
+			if(error) {
+				return next(new Error("cannot fetch all notes"))
+			}
+
+			res.status(200).json(data);
+		})
 	})
 }
 

@@ -42,7 +42,19 @@ exports.getUser = function(req, res, next) {
 		return next(new Error("could not get user"))
 	}
 
-	res.status(200).json(req.user);
+	var email = req.user.email;
+
+	userModel.find()
+		.populate('notes')
+		.exec(function(err, data) {
+			if(err) {
+				return next(new Error("could not fetch users notes"))
+			}
+
+			res.status(200).json(data);
+		})
+
+	//res.status(200).json(req.user);
 }
 
 exports.fetchUsers = function(req, res, next) {
