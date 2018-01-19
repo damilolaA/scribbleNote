@@ -7,6 +7,7 @@
 		loginErr      = login.getElementsByClassName("error")[0],
 		homeView      = document.getElementById("home-views"),
 		mainView      = document.getElementById("main-views"),
+		viewNotes	  = mainView.getElementsByClassName("view notes")[0]
 		notePad       = mainView.getElementsByClassName("view notepad")[0],
 		mainNote      = document.getElementsByClassName("main")[0],
 		signupPointer = document.getElementsByClassName("pointer")[0],
@@ -151,8 +152,11 @@
 			if(http.status == 200 || http.status == 304) {
 
 				var data = JSON.parse(http.responseText);
-				console.log(data);
-				alert("Hello");
+				console.log(data.email)
+				if(data.hasOwnProperty("email")) {
+					notePad.classList.remove("module-active");
+					viewNotes.classList.add("module-active");
+				}
 			}
 		}
 	}
