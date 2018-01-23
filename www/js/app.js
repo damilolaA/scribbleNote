@@ -152,8 +152,8 @@
 			if(http.status == 200 || http.status == 304) {
 
 				var data = JSON.parse(http.responseText);
-				console.log(data.email)
-				if(data.hasOwnProperty("email")) {
+				console.log(data);
+				if(data.hasOwnProperty("users")) {
 					notePad.classList.remove("module-active");
 					viewNotes.classList.add("module-active");
 				}

@@ -23,6 +23,8 @@ exports.addNote = (req, res, next) => {
 
 	userModel.findById(id, (err, info) => {
 
+		console.log(info);
+
 		if(err) {return next(new Error("could not fetch user by id"))}
 
 		var data = req.body;
@@ -35,7 +37,9 @@ exports.addNote = (req, res, next) => {
 				return next(new Error("cannot add note"))
 			}
 
-			noteModel.find({})
+			var _id = msg._id;
+
+			noteModel.findById(_id)
 				.populate('users')
 				.exec(function(err, item) {
 
