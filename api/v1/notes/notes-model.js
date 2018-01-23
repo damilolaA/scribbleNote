@@ -6,10 +6,10 @@ var mongoose    = require("mongoose"),
 mongoose.connect(databaseUrl)
 
 noteSchema = new mongoose.Schema({
-	email: {type: String, required:true},
 	title: {type: String, required: true},
 	note: {type: String, required: true},
-	date: {type: Date, default: Date.now}
+	date: {type: Date, default: Date.now},
+	users: {type: mongoose.Schema.Types.ObjectId, ref: 'user'}
 })
 
 module.exports = mongoose.model("note", noteSchema);

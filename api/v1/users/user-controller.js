@@ -1,4 +1,5 @@
-var userModel = require("./user-model.js");
+var userModel = require("./user-model.js"),
+	noteModel = require("../notes/notes-model.js");
 
 exports.interceptIds = function(req, res, next, id) {
 
@@ -36,25 +37,23 @@ exports.addUser = function(req, res, next) {
 	})	
 }
 
-exports.getUser = function(req, res, next) {
+exports.getUserNote = function(req, res, next) {
+
+	var id = req.user.id;
 
 	if(!req.user) {
-		return next(new Error("could not get user"))
+		return next(new Error("cannot get users note"))
 	}
 
-	var email = req.user.email;
+	noteModel.find({users : id})
+		.then(function(response) {
 
-	userModel.find()
-		.populate('notes')
-		.exec(function(err, data) {
-			if(err) {
-				return next(new Error("could not fetch users notes"))
-			}
-
-			res.status(200).json(data);
+			res.status(200).json(response)
+		})
+		.catch(function(err) {
+			return next(new Error("cannot fetch user's data"))
 		})
 
-	//res.status(200).json(req.user);
 }
 
 exports.fetchUsers = function(req, res, next) {

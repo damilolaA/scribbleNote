@@ -1,6 +1,7 @@
 var express    = require("express"),
 	router     = express.Router(),
-	controller = require("./user-controller.js");
+	controller = require("./user-controller.js"),
+	auth	   = require("../auth/auth.js");
 
 router.param("id", controller.interceptIds);
 
@@ -9,7 +10,7 @@ router.route("/")
 	.post(controller.addUser)
 
 router.route("/:id")
-	.get(controller.getUser)
+	.get(auth.decodeToken, controller.getUserNote)
 	.put(controller.updateUser)
 	.delete(controller.deleteUser)
 

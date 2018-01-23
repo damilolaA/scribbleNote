@@ -1,7 +1,6 @@
 var noteModel = require("./notes-model.js"),
 	userModel = require("../users/user-model.js");
 
-
 exports.interceptId = function(req, res, next, id) {
 
 	noteModel.findById(id)
@@ -12,6 +11,7 @@ exports.interceptId = function(req, res, next, id) {
 
 		req.note = data;
 		next()
+
 	}, function(err) {
 		return next(err);
 	})
@@ -19,47 +19,40 @@ exports.interceptId = function(req, res, next, id) {
 
 exports.addNote = (req, res, next) => {
 
-	var id = req.user.id
+	var id = req.user.id;
 
 	userModel.findById(id, (err, info) => {
 
 		if(err) {return next(new Error("could not fetch user by id"))}
 
 		var data = req.body;
-		data.email = info.email;
+		data.users = id;
 
 		var note = new noteModel(data)
 		note.save(function(err, msg) {
+
 			if(err) {
 				return next(new Error("cannot add note"))
 			}
 
-			res.status(200).json(msg)
+			noteModel.find({})
+				.populate('users')
+				.exec(function(err, item) {
+
+					res.status(200).json(item)
+				})
 		})
 	})
 }
 
 exports.fetchNotes = function(req, res, next) {
 
-	var id = req.user.id,
-		email;
-
-	userModel.findById(id, (err, user) => {
-
-		email = user.email;
-
+	noteModel.find((err, data) => {
 		if(err) {
-			return next(new Error("cannot get user"))
+			return next(new Error("cannot fetch notes"))
 		}
 
-		noteModel.findOne({email: email}, function(error, data) {
-
-			if(error) {
-				return next(new Error("cannot fetch all notes"))
-			}
-
-			res.status(200).json(data);
-		})
+		res.status(200).json(data)
 	})
 }
 

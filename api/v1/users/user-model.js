@@ -10,8 +10,7 @@ var mongoose 	 = require("mongoose"),
 userSchema = new Schema({
 	email: {type: String, required: true, unique:true},
 	password: {type: String, required: true},
-	date	: {type: Date, default: Date.now},
-	notes: [{type: Schema.Types.ObjectId, ref: 'note'}]
+	date	: {type: Date, default: Date.now}
 })
 
 userSchema.pre("save", function(next) {
