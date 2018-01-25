@@ -53,8 +53,16 @@ exports.getUserNote = function(req, res, next) {
 		.catch(function(err) {
 			return next(new Error("cannot fetch user's data"))
 		})
-
 }
+
+/*exports.getUser = function(req, res, next) {
+
+	if(!req.user) {
+		return next(new Error("cannot get user"))
+	}
+
+	res.status(200).json(req.user);
+}*/
 
 exports.fetchUsers = function(req, res, next) {
 

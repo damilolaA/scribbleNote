@@ -12,7 +12,73 @@
 		mainNote      = document.getElementsByClassName("main")[0],
 		signupPointer = document.getElementsByClassName("pointer")[0],
 		loginPointer  = document.getElementsByClassName("pointer")[1],
+		fab			  = document.getElementsByClassName("def-fab add-note")[0],
+		backFab		  = document.getElementsByClassName("back")[0],
 		xhr	          = new XMLHttpRequest();
+
+
+	backFab.addEventListener("click", function(e) {
+		e.preventDefault();
+
+		var id = localStorage.getItem("_id");
+
+		xhr.open("GET", "http://192.168.99.100:2000/api/v1/users/" + id)
+
+		xhr.setRequestHeader("Content-Type", "Application/json");
+		xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"));
+
+		xhr.onreadystatechange = function() {
+			fetchNotes(xhr)
+		}
+
+		xhr.send(null)
+
+	})
+
+	function fetchNotes(http) {
+		if(http.readyState == 4) {
+			if(http.status == 200 || http.status == 304) {
+				var data = JSON.parse(http.responseText);
+
+				for(var i = 0, len = data.length; i < len; i++) {
+
+					//console.log(data[i])
+
+					var ul = document.getElementsByClassName("note-list")[0];
+
+					var li = document.getElementsByClassName("note card")[0];
+
+					var	noteTitle = li.getElementsByClassName("note-title")[0];
+					var	noteTitleVal = document.createTextNode(data[i].title);
+					noteTitle.appendChild(noteTitleVal);
+
+					var dateCreated = li.getElementsByClassName("date-created")[0];
+					var dateCreatedVal = document.createTextNode(data[i].date);
+					dateCreated.appendChild(dateCreatedVal);
+
+					var noteBrief = li.getElementsByClassName("note-brief")[0];
+					var noteBriefVal = document.createTextNode(data[i].note);
+					noteBrief.appendChild(noteBriefVal);
+
+					li.appendChild(noteBrief);
+					li.appendChild(noteTitle);
+					li.appendChild(dateCreated);
+
+					ul.appendChild(li);
+
+					notePad.classList.toggle("module-active");
+					viewNotes.classList.toggle("module-active");
+				}
+			}
+		}
+	}
+
+
+	fab.addEventListener("click", function(e) {
+		e.preventDefault();
+
+		notePad.classList.toggle("module-active");
+	})
 
 	signupPointer.addEventListener("click", function(e) {
 		e.preventDefault();
@@ -100,7 +166,7 @@
 				console.log(info)
 				if(info.hasOwnProperty("token")) {
 					localStorage.setItem("token", info.token);
-					localStorage.setItem("email", info.email);
+					localStorage.setItem("_id", info._id);
 
 					homeView.classList.toggle("module-active");
 					notePad.classList.add("module-active");
@@ -132,8 +198,6 @@
 
 		data = data.substring(0, data.length - 1);
 
-		console.log(data);
-
 		xhr.open("POST", "http://192.168.99.100:2000/api/v1/notes")
 
 		xhr.setRequestHeader("Content-Type", "Application/x-www-form-urlencoded")
@@ -152,7 +216,7 @@
 			if(http.status == 200 || http.status == 304) {
 
 				var data = JSON.parse(http.responseText);
-				console.log(data);
+
 				if(data.hasOwnProperty("users")) {
 					notePad.classList.remove("module-active");
 					viewNotes.classList.add("module-active");
@@ -160,5 +224,36 @@
 			}
 		}
 	}
+
+	viewNotes.addEventListener("scroll", function(e) {
+
+		e.preventDefault();
+
+		var id = localStorage.getItem("_id");
+
+		xhr.open("GET", "http://192.168.99.100:2000/api/v1/users/" + id);
+
+		xhr.setRequestHeader("Content-Type", "Application/json");
+		xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
+
+		xhr.onreadystatechange = function() {
+			getNotes(xhr)
+		}
+
+		xhr.send(null)
+	})
+
+	function getNotes(http) {
+
+		if(http.readyState == 4) {
+			if(http.status == 200 || http.status == 304) {
+
+				var notes = JSON.parse(http.responseText);
+
+				console.log(notes);
+			}
+		}
+	}
+
 
 }())
