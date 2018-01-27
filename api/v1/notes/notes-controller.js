@@ -81,7 +81,9 @@ exports.updateNote = function(req, res, next) {
 
 exports.deleteNote = function(req, res, next) {
 
-	noteModel.remove({id: req.note._id}, (err, data) => {
+	console.log(req.note._id);
+
+	noteModel.remove({_id: req.note._id}, (err, data) => {
 
 		if(err) {
 			return next(new Error("note cannot be deleted"))

@@ -14,8 +14,8 @@
 		loginPointer  = document.getElementsByClassName("pointer")[1],
 		fab			  = document.getElementsByClassName("def-fab add-note")[0],
 		backFab		  = document.getElementsByClassName("back")[0],
+		ul 			  = document.getElementsByClassName("note-list")[0],
 		xhr	          = new XMLHttpRequest();
-
 
 	backFab.addEventListener("click", function(e) {
 		e.preventDefault();
@@ -24,7 +24,6 @@
 		viewNotes.classList.toggle("module-active");
 
 	})
-
 
 	fab.addEventListener("click", function(e) {
 		e.preventDefault();
@@ -45,6 +44,7 @@
 	})
 
 	signup.addEventListener("submit", function(e) {
+
 		e.preventDefault();
 
 		var data = "",
@@ -72,6 +72,7 @@
 	})
 
 	function handleResponse(http) {
+
 		if(http.readyState == 4) {
 			if(http.status == 200 || http.status == 304) {
 				var data = JSON.parse(http.responseText);
@@ -81,6 +82,7 @@
 					login.classList.toggle("module-active");
 				} 
 			} else {
+
 				if(http.status == 500) {
 					var msg = document.createTextNode("email exists already");
 					error.appendChild(msg);
@@ -91,6 +93,7 @@
 	}
 
 	login.addEventListener("submit", function(e) {
+
 		e.preventDefault();
 
 		var data = {},
@@ -112,10 +115,12 @@
 	})
 
 	function manageResponse(http) {
+
 		if(http.readyState == 4) {
 			if(http.status == 200 || http.status == 304) {
+
 				var info = JSON.parse(http.responseText);
-				console.log(info)
+
 				if(info.hasOwnProperty("token")) {
 					localStorage.setItem("token", info.token);
 					localStorage.setItem("_id", info._id);
@@ -125,6 +130,7 @@
 				}
 			}
 		} else {
+
 			if(http.status == 500) {
 				var err = document.createTextNode("invalid username and/or password");
 
@@ -135,6 +141,7 @@
 	}
 
 	mainNote.addEventListener("submit", function(e) {
+
 		e.preventDefault();
 
 		var data = "",
@@ -170,6 +177,36 @@
 				var data = JSON.parse(http.responseText);
 
 				if(data.hasOwnProperty("users")) {
+
+					var li = document.createElement("li");
+					li.setAttribute("class", "note card");
+					li.setAttribute("data-id", data._id);
+
+					var	noteTitle = document.createElement("h4");
+					noteTitle.setAttribute("class", "note-title");
+					var	noteTitleVal = document.createTextNode(data.title);
+					noteTitle.appendChild(noteTitleVal);
+
+					var dateCreated = document.createElement("h5");
+					dateCreated.setAttribute("class", "date-created");
+					var dateCreatedVal = document.createTextNode(data.date);
+					dateCreated.appendChild(dateCreatedVal);
+
+					var noteBrief = document.createElement("p");
+					noteBrief.setAttribute("class", "note-brief");
+					var noteBriefVal = document.createTextNode(data.note);
+					noteBrief.appendChild(noteBriefVal);
+
+					var deleteIcon = document.createElement("div");
+					deleteIcon.setAttribute("class", "delete-icon delete-note");
+
+					li.appendChild(noteTitle);
+					li.appendChild(noteBrief);
+					li.appendChild(dateCreated);
+					li.appendChild(deleteIcon);
+
+					ul.appendChild(li);
+
 					notePad.classList.remove("module-active");
 					viewNotes.classList.add("module-active");
 				}
@@ -196,6 +233,7 @@
 	})
 
 	function getNotes(http) {
+
 		if(http.readyState == 4) {
 			if(http.status == 200 || http.status == 304) {
 				var data = JSON.parse(http.responseText);
@@ -204,10 +242,9 @@
 
 					var info = data[i];
 
-					var ul = document.getElementsByClassName("note-list")[0];
-
-					var li = document.createElement("li");
+				    var li = document.createElement("li");
 					li.setAttribute("class", "note card");
+					li.setAttribute("data-id", info._id);
 
 					var	noteTitle = document.createElement("h4");
 					noteTitle.setAttribute("class", "note-title");
@@ -233,14 +270,9 @@
 					li.appendChild(deleteIcon);
 
 					ul.appendChild(li);
-
-					/*notePad.classList.toggle("module-active");
-					viewNotes.classList.toggle("module-active");*/
 				}
 			}
 		}
-	
-	}
-
+	}	
 
 }())
