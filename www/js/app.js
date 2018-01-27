@@ -64,7 +64,8 @@
 
 		data = data.substring(0, data.length -1);
 		//"https://scribblenoteapp.herokuapp.com/api/v1/users
-		xhr.open("POST", "http://192.168.99.100:2000/api/v1/users");
+		//"http://192.168.99.100:2000/api/v1/users"
+		xhr.open("POST", "https://scribblenoteapp.herokuapp.com/api/v1/users");
 
 		xhr.setRequestHeader("Content-Type", "Application/x-www-form-urlencoded");
 
@@ -107,7 +108,7 @@
 			data[encodeURIComponent(v.name)] = encodeURIComponent(v.value); 
 		});
 		
-		xhr.open("POST", "http://192.168.99.100:2000/api/v1/auth");
+		xhr.open("POST", "https://scribblenoteapp.herokuapp.com/api/v1/auth");
 
 		xhr.setRequestHeader("Content-Type", "application/json")
 
@@ -161,7 +162,7 @@
 
 		data = data.substring(0, data.length - 1);
 
-		xhr.open("POST", "http://192.168.99.100:2000/api/v1/notes")
+		xhr.open("POST", "https://scribblenoteapp.herokuapp.com/api/v1/notes")
 
 		xhr.setRequestHeader("Content-Type", "Application/x-www-form-urlencoded")
 		xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"));
@@ -224,7 +225,7 @@
 
 		var id = localStorage.getItem("_id");
 
-		xhr.open("GET", "http://192.168.99.100:2000/api/v1/users/" + id);
+		xhr.open("GET", "https://scribblenoteapp.herokuapp.com/api/v1/users" + id);
 
 		xhr.setRequestHeader("Content-Type", "Application/json");
 		xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
