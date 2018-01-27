@@ -1,6 +1,10 @@
 
 (function() {
 
+	window.$on = function(target, event, cb) {
+		target.addEventListener(event, cb, false);
+	}
+
 	var signup        = document.getElementsByClassName("signup")[0],
 		login         = document.getElementsByClassName("login")[0],
 		error         = signup.getElementsByClassName("error")[0],
@@ -17,33 +21,33 @@
 		ul 			  = document.getElementsByClassName("note-list")[0],
 		xhr	          = new XMLHttpRequest();
 
-	backFab.addEventListener("click", function(e) {
+	$on(backFab, "click", function(e) {
 		e.preventDefault();
 
 		notePad.classList.toggle("module-active");
 		viewNotes.classList.toggle("module-active");
-
 	})
 
-	fab.addEventListener("click", function(e) {
+	$on(fab, "click", function(e) {
 		e.preventDefault();
 
+		mainNote.reset();
 		notePad.classList.toggle("module-active");
 	})
 
-	signupPointer.addEventListener("click", function(e) {
+	$on(signupPointer, "click", function(e) {
 		e.preventDefault();
 
 		signup.classList.toggle("module-active");
 	})
 
-	loginPointer.addEventListener("click", function(e) {
+	$on(loginPointer, "click", function(e) {
 		e.preventDefault();
 
 		signup.classList.toggle("module-active");
 	})
 
-	signup.addEventListener("submit", function(e) {
+	$on(signup, "submit", function(e) {
 
 		e.preventDefault();
 
@@ -92,7 +96,7 @@
 		}
 	}
 
-	login.addEventListener("submit", function(e) {
+	$on(login, "submit", function(e) {
 
 		e.preventDefault();
 
@@ -140,7 +144,7 @@
 		}
 	}
 
-	mainNote.addEventListener("submit", function(e) {
+	$on(mainNote, "submit", function(e) {
 
 		e.preventDefault();
 
@@ -214,7 +218,7 @@
 		}
 	}
 
-	window.addEventListener("load", function(e) {
+	$on(window, "load", function(e) {
 
 		e.preventDefault();
 
