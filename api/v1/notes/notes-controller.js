@@ -1,4 +1,5 @@
 var noteModel = require("./notes-model.js"),
+	moment	  = require("moment"),
 	userModel = require("../users/user-model.js");
 
 exports.interceptId = function(req, res, next, id) {
@@ -23,8 +24,6 @@ exports.addNote = (req, res, next) => {
 
 	userModel.findById(id, (err, info) => {
 
-		console.log(info);
-
 		if(err) {return next(new Error("could not fetch user by id"))}
 
 		var data = req.body;
@@ -42,6 +41,14 @@ exports.addNote = (req, res, next) => {
 			noteModel.findById(_id)
 				.populate('users')
 				.exec(function(err, item) {
+
+					item = item.toObject();
+
+					var newDate = moment(item.date).format('YYYY-DD-MM');
+
+					item.momentDate = newDate;
+
+					console.log(item);
 
 					res.status(200).json(item)
 				})

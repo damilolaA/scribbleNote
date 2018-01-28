@@ -180,7 +180,7 @@
 			if(http.status == 200 || http.status == 304) {
 
 				var data = JSON.parse(http.responseText);
-
+				console.log(data);
 				if(data.hasOwnProperty("users")) {
 
 					var li = document.createElement("li");
@@ -194,7 +194,7 @@
 
 					var dateCreated = document.createElement("h5");
 					dateCreated.setAttribute("class", "date-created");
-					var dateCreatedVal = document.createTextNode(data.date);
+					var dateCreatedVal = document.createTextNode(data.momentDate);
 					dateCreated.appendChild(dateCreatedVal);
 
 					var noteBrief = document.createElement("p");
@@ -225,7 +225,7 @@
 
 		var id = localStorage.getItem("_id");
 
-		xhr.open("GET", "https://scribblenoteapp.herokuapp.com/api/v1/users" + id);
+		xhr.open("GET", "https://scribblenoteapp.herokuapp.com/api/v1/users/" + id);
 
 		xhr.setRequestHeader("Content-Type", "Application/json");
 		xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
@@ -242,10 +242,11 @@
 		if(http.readyState == 4) {
 			if(http.status == 200 || http.status == 304) {
 				var data = JSON.parse(http.responseText);
-
+				console.log(data);
 				for(var i = 0, len = data.length; i < len; i++) {
 
 					var info = data[i];
+					//console.log(info);
 
 				    var li = document.createElement("li");
 					li.setAttribute("class", "note card");
