@@ -250,6 +250,7 @@
 
 				    var li = document.createElement("li");
 					li.setAttribute("class", "note card");
+					li.setAttribute("id", "listNote");
 					li.setAttribute("data-id", info._id);
 
 					var	noteTitle = document.createElement("h4");
@@ -269,6 +270,37 @@
 
 					var deleteIcon = document.createElement("div");
 					deleteIcon.setAttribute("class", "delete-icon delete-note");
+
+					$on(deleteIcon, "click", function(e) {
+
+						e.preventDefault();
+
+						var id = info._id;
+						console.log(id);
+
+						xhr.open("DELETE", "https://scribblenoteapp.herokuapp.com/api/v1/notes/" + id);
+
+						xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
+
+						xhr.onreadystatechange = function() {
+							deleteNote(xhr);
+						}
+
+						xhr.send(null);
+					})
+
+					function deleteNote(http) {
+						if(http.readyState === 4) {
+							if(http.status == 200) {
+								var info = JSON.parse(http.responseText)
+
+								if(info.hasOwnProperty('_id')) {
+									var element = document.getElementById("listNote");
+   									 element.parentNode.removeChild(element);
+								}
+							}
+						}
+					}
 
 					li.appendChild(noteTitle);
 					li.appendChild(noteBrief);
