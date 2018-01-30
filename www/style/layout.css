@@ -14,6 +14,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  display: none;
 }
 #home-views {
   position: fixed;
@@ -35,4 +36,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+.module-active {
+  display: block !important;
 }

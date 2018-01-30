@@ -184,6 +184,7 @@
 				if(data.hasOwnProperty("users")) {
 
 					var li = document.createElement("li");
+					li.setAttribute("id", "listNote");
 					li.setAttribute("class", "note card");
 					li.setAttribute("data-id", data._id);
 
@@ -194,7 +195,7 @@
 
 					var dateCreated = document.createElement("h5");
 					dateCreated.setAttribute("class", "date-created");
-					var dateCreatedVal = document.createTextNode(data.momentDate);
+					var dateCreatedVal = document.createTextNode(data.date);
 					dateCreated.appendChild(dateCreatedVal);
 
 					var noteBrief = document.createElement("p");
@@ -204,6 +205,37 @@
 
 					var deleteIcon = document.createElement("div");
 					deleteIcon.setAttribute("class", "delete-icon delete-note");
+
+					$on(deleteIcon, "click", function(e) {
+
+						e.preventDefault();
+
+						var id = data._id;
+						console.log("This is the note " + id);
+
+						xhr.open("DELETE", "https://scribblenoteapp.herokuapp.com/api/v1/notes/" + id);
+
+						xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
+
+						xhr.onreadystatechange = function() {
+							removeNote(xhr);
+						}
+
+						xhr.send(null);
+					})
+
+					function removeNote(http) {
+						if(http.readyState === 4) {
+							if(http.status == 200) {
+								var info = JSON.parse(http.responseText)
+
+								if(info.hasOwnProperty('_id')) {
+									var element = document.getElementById("listNote");
+   									element.parentNode.removeChild(element);
+								}
+							}
+						}
+					}
 
 					li.appendChild(noteTitle);
 					li.appendChild(noteBrief);
@@ -225,6 +257,8 @@
 
 		var id = localStorage.getItem("_id");
 
+		console.log("This is the users " + id);
+
 		xhr.open("GET", "https://scribblenoteapp.herokuapp.com/api/v1/users/" + id);
 
 		xhr.setRequestHeader("Content-Type", "Application/json");
@@ -240,18 +274,20 @@
 	function getNotes(http) {
 
 		if(http.readyState == 4) {
+
 			if(http.status == 200 || http.status == 304) {
 				var data = JSON.parse(http.responseText);
-				console.log(data);
+
 				for(var i = 0, len = data.length; i < len; i++) {
 
 					var info = data[i];
-					//console.log(info);
+					var id = info._id;
 
 				    var li = document.createElement("li");
+				    
 					li.setAttribute("class", "note card");
 					li.setAttribute("id", "listNote");
-					li.setAttribute("data-id", info._id);
+					li.setAttribute("data-id", id);
 
 					var	noteTitle = document.createElement("h4");
 					noteTitle.setAttribute("class", "note-title");
@@ -272,13 +308,12 @@
 					deleteIcon.setAttribute("class", "delete-icon delete-note");
 
 					$on(deleteIcon, "click", function(e) {
-
+						console.log(this)
 						e.preventDefault();
 
-						var id = info._id;
-						console.log(id);
+						console.log("This is the note " + this.parentNode.getAttribute("data-id"));
 
-						xhr.open("DELETE", "https://scribblenoteapp.herokuapp.com/api/v1/notes/" + id);
+						xhr.open("DELETE", "https://scribblenoteapp.herokuapp.com/api/v1/notes/" + this.parentNode.getAttribute("data-id"));
 
 						xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
 
@@ -296,7 +331,7 @@
 
 								if(info.hasOwnProperty('_id')) {
 									var element = document.getElementById("listNote");
-   									 element.parentNode.removeChild(element);
+   									element.parentNode.removeChild(element);
 								}
 							}
 						}

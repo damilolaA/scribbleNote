@@ -1,3 +1,3 @@
-exports.listener = function(target, event, cb) {
+function listener (target, event, cb) {
 	target.addEventListener(event, cb, false);
 }
