@@ -284,7 +284,7 @@
 					var id = info._id;
 
 				    var li = document.createElement("li");
-				    
+
 					li.setAttribute("class", "note card");
 					li.setAttribute("id", "listNote");
 					li.setAttribute("data-id", id);
@@ -308,12 +308,14 @@
 					deleteIcon.setAttribute("class", "delete-icon delete-note");
 
 					$on(deleteIcon, "click", function(e) {
-						console.log(this)
+
 						e.preventDefault();
 
-						console.log("This is the note " + this.parentNode.getAttribute("data-id"));
+						var noteId = this.parentNode.getAttribute("data-id");
 
-						xhr.open("DELETE", "https://scribblenoteapp.herokuapp.com/api/v1/notes/" + this.parentNode.getAttribute("data-id"));
+						console.log("This is the note " + noteId);
+
+						xhr.open("DELETE", "https://scribblenoteapp.herokuapp.com/api/v1/notes/" + noteId);
 
 						xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
 
