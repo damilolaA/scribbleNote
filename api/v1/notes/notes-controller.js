@@ -42,11 +42,11 @@ exports.addNote = (req, res, next) => {
 				.populate('users')
 				.exec(function(err, item) {
 
-					item = item.toObject();
+					item = item.toJSON();
 
 					var newDate = moment(item.date).format('YYYY-DD-MM');
 
-					item.momentDate = newDate;
+					item.date = newDate;
 
 					console.log(item);
 

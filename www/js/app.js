@@ -131,6 +131,7 @@
 					localStorage.setItem("_id", info._id);
 
 					homeView.classList.toggle("module-active");
+					mainView.classList.add("module-active");
 					notePad.classList.add("module-active");
 				}
 			}
@@ -184,6 +185,7 @@
 				if(data.hasOwnProperty("users")) {
 
 					var li = document.createElement("li");
+
 					li.setAttribute("id", "listNote");
 					li.setAttribute("class", "note card");
 					li.setAttribute("data-id", data._id);
@@ -195,7 +197,7 @@
 
 					var dateCreated = document.createElement("h5");
 					dateCreated.setAttribute("class", "date-created");
-					var dateCreatedVal = document.createTextNode(data.date);
+					var dateCreatedVal = document.createTextNode(data.momentDate);
 					dateCreated.appendChild(dateCreatedVal);
 
 					var noteBrief = document.createElement("p");
@@ -281,6 +283,8 @@
 				for(var i = 0, len = data.length; i < len; i++) {
 
 					var info = data[i];
+
+					console.log(info);
 					var id = info._id;
 
 				    var li = document.createElement("li");
