@@ -1,10 +1,6 @@
 
 (function() {
 
-	window.$on = function(target, event, cb) {
-		target.addEventListener(event, cb, false);
-	}
-
 	var signup        = document.getElementsByClassName("signup")[0],
 		login         = document.getElementsByClassName("login")[0],
 		error         = signup.getElementsByClassName("error")[0],
@@ -47,6 +43,7 @@
 		signup.classList.toggle("module-active");
 	})
 
+	//signUp
 	$on(signup, "submit", function(e) {
 
 		e.preventDefault();
@@ -70,33 +67,13 @@
 		xhr.setRequestHeader("Content-Type", "Application/x-www-form-urlencoded");
 
 		xhr.onreadystatechange = function() {
-			handleResponse(xhr);
+			signUpResponse(xhr, signup, login, error);
 		}
 
 		xhr.send(data);
 	})
 
-	function handleResponse(http) {
-
-		if(http.readyState == 4) {
-			if(http.status == 200 || http.status == 304) {
-				var data = JSON.parse(http.responseText);
-
-				if(data.hasOwnProperty("_id")) {
-					signup.classList.toggle("module-active");
-					login.classList.toggle("module-active");
-				} 
-			} else {
-
-				if(http.status == 500) {
-					var msg = document.createTextNode("email exists already");
-					error.appendChild(msg);
-					error.classList.toggle("module-active");
-				}
-			}
-		}
-	}
-
+	//login
 	$on(login, "submit", function(e) {
 
 		e.preventDefault();
@@ -113,39 +90,15 @@
 		xhr.setRequestHeader("Content-Type", "application/json")
 
 		xhr.onreadystatechange = function() {
-			manageResponse(xhr);
+
+			manageLoginResponse(xhr, homeView, mainView, notePad, loginErr);
 		}
 
 		xhr.send(JSON.stringify(data));
 	})
 
-	function manageResponse(http) {
 
-		if(http.readyState == 4) {
-			if(http.status == 200 || http.status == 304) {
-
-				var info = JSON.parse(http.responseText);
-
-				if(info.hasOwnProperty("token")) {
-					localStorage.setItem("token", info.token);
-					localStorage.setItem("_id", info._id);
-
-					homeView.classList.toggle("module-active");
-					mainView.classList.add("module-active");
-					notePad.classList.add("module-active");
-				}
-			}
-		} else {
-
-			if(http.status == 500) {
-				var err = document.createTextNode("invalid username and/or password");
-
-				loginErr.appendChild(err);
-				loginErr.classList.add("module-active");
-			}
-		}
-	}
-
+	//addNotes
 	$on(mainNote, "submit", function(e) {
 
 		e.preventDefault();
@@ -181,7 +134,7 @@
 			if(http.status == 200 || http.status == 304) {
 
 				var data = JSON.parse(http.responseText);
-				console.log(data);
+
 				if(data.hasOwnProperty("users")) {
 
 					var li = document.createElement("li");
@@ -208,43 +161,45 @@
 					var deleteIcon = document.createElement("div");
 					deleteIcon.setAttribute("class", "delete-icon delete-note");
 
-					$on(deleteIcon, "click", function(e) {
-
-						e.preventDefault();
-
-						var id = data._id;
-						console.log("This is the note " + id);
-
-						xhr.open("DELETE", "https://scribblenoteapp.herokuapp.com/api/v1/notes/" + id);
-
-						xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
-
-						xhr.onreadystatechange = function() {
-							removeNote(xhr);
-						}
-
-						xhr.send(null);
-					})
-
-					function removeNote(http) {
-						if(http.readyState === 4) {
-							if(http.status == 200) {
-								var info = JSON.parse(http.responseText)
-
-								if(info.hasOwnProperty('_id')) {
-									var element = document.getElementById("listNote");
-   									element.parentNode.removeChild(element);
-								}
-							}
-						}
-					}
-
 					li.appendChild(noteTitle);
 					li.appendChild(noteBrief);
 					li.appendChild(dateCreated);
 					li.appendChild(deleteIcon);
 
 					ul.appendChild(li);
+
+					$on(deleteIcon, "click", function(e) {
+
+						e.preventDefault();
+
+						var id = this.parentNode.getAttribute("data-id");
+
+						xhr.open("DELETE", "https://scribblenoteapp.herokuapp.com/api/v1/notes/" + id);
+
+						xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
+
+						xhr.onreadystatechange = function() {
+							removeNote(xhr, id);
+						}
+
+						xhr.send(null);
+					})
+
+					function removeNote(http, id) {
+						if(http.readyState === 4) {
+							if(http.status == 200) {
+								var info = JSON.parse(http.responseText);
+								
+								var respId = info._id;
+								console.log("this is the response id " + respId);
+								console.log(id);
+								if(id == respId) {
+
+   									ul.removeChild(li);
+								}
+							}
+						}
+					}
 
 					notePad.classList.remove("module-active");
 					viewNotes.classList.add("module-active");
@@ -253,18 +208,22 @@
 		}
 	}
 
+	//fetch Notes
 	$on(window, "load", function(e) {
 
 		e.preventDefault();
 
-		var id = localStorage.getItem("_id");
+		var id    = localStorage.getItem("_id"),
+		    token = localStorage.getItem("token");
 
-		console.log("This is the users " + id);
+		if(!token) {
+			return console.log("No token found");
+		}
 
 		xhr.open("GET", "https://scribblenoteapp.herokuapp.com/api/v1/users/" + id);
 
 		xhr.setRequestHeader("Content-Type", "Application/json");
-		xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
+		xhr.setRequestHeader("Authorization", "Bearer " + token);
 
 		xhr.onreadystatechange = function() {
 			getNotes(xhr)
@@ -283,8 +242,6 @@
 				for(var i = 0, len = data.length; i < len; i++) {
 
 					var info = data[i];
-
-					console.log(info);
 					var id = info._id;
 
 				    var li = document.createElement("li");
@@ -311,44 +268,30 @@
 					var deleteIcon = document.createElement("div");
 					deleteIcon.setAttribute("class", "delete-icon delete-note");
 
-					$on(deleteIcon, "click", function(e) {
-
-						e.preventDefault();
-
-						var noteId = this.parentNode.getAttribute("data-id");
-
-						console.log("This is the note " + noteId);
-
-						xhr.open("DELETE", "https://scribblenoteapp.herokuapp.com/api/v1/notes/" + noteId);
-
-						xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
-
-						xhr.onreadystatechange = function() {
-							deleteNote(xhr);
-						}
-
-						xhr.send(null);
-					})
-
-					function deleteNote(http) {
-						if(http.readyState === 4) {
-							if(http.status == 200) {
-								var info = JSON.parse(http.responseText)
-
-								if(info.hasOwnProperty('_id')) {
-									var element = document.getElementById("listNote");
-   									element.parentNode.removeChild(element);
-								}
-							}
-						}
-					}
-
 					li.appendChild(noteTitle);
 					li.appendChild(noteBrief);
 					li.appendChild(dateCreated);
 					li.appendChild(deleteIcon);
 
 					ul.appendChild(li);
+
+					$on(deleteIcon, "click", function(e) {
+
+						e.preventDefault();
+
+						var noteId = this.parentNode.getAttribute("data-id");
+
+						xhr.open("DELETE", "https://scribblenoteapp.herokuapp.com/api/v1/notes/" + noteId);
+
+						xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"))
+
+						xhr.onreadystatechange = function() {
+							deleteNote(xhr, noteId);
+						}
+
+						xhr.send(null);
+					})
+
 				}
 			}
 		}
